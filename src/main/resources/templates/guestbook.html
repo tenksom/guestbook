@@ -38,10 +38,17 @@
                 <blockquote class="entrytext" th:text="${entry.text}"></blockquote>
                 <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{/guestbook/{id}(id=${entry.id})}"
                       th:attr="data-entry-id=${entry.id}" th:object="${form}">
-                    <input th:title="#{guestbook.form.edit}" class="editfield" hx:text="${entry.text}">
+                    <input class="form-control" type="text" th:value="${entry.name}" th:field="*{name}" th:errorclass="is-invalid" required="required"/>
+                    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:text="#{guestbook.form.name.required}">
+                        Please provide a name.
+                    </div>
+                    <textarea th:field="*{text}" th:errorclass="is-invalid" class="form-control" required="required" th:value="${entry.name}"></textarea>
+                    <div th:if="${#fields.hasErrors('text')}" class="invalid-feedback" th:text="#{guestbook.form.text.required}">
+                        Please provide a text.
+                    </div>
                     <button th:title="#{guestbook.form.submit}" class="editbutton"
-                            hx:edit="@{/guestbook/{id}(id=${entry.id}">
-                            Senden
+                            hx:edit="@{/guestbook/{id}(id=${entry.id}" type="submit">
+                            Abschicken
                     </button>
                 </form>
             </div>
