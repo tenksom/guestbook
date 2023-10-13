@@ -27,11 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
@@ -104,6 +100,16 @@ class GuestbookController {
 
 		guestbook.save(form.toNewEntry());
 
+		return "redirect:/guestbook";
+	}
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping(path="/guestbook")
+	String editEntry(@Valid @ModelAttribute("form") GuestbookForm form, GuestbookEntry entry,  Errors errors, Model model){
+
+		entry.setName(form.getName());
+		entry.setText(form.getText());
+
+		guestbook.save(entry);
 		return "redirect:/guestbook";
 	}
 

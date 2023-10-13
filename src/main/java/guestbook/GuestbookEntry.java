@@ -34,8 +34,8 @@ import org.springframework.util.Assert;
 class GuestbookEntry {
 
 	private @Id @GeneratedValue Long id;
-	private final String name, text;
-	private final LocalDateTime date;
+	private String name, text;
+	private LocalDateTime date;
 
 	/**
 	 * Creates a new {@link GuestbookEntry} for the given name and text.
@@ -74,5 +74,13 @@ class GuestbookEntry {
 
 	public String getText() {
 		return text;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 }
