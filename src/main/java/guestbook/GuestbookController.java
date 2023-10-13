@@ -103,7 +103,7 @@ class GuestbookController {
 		return "redirect:/guestbook";
 	}
 	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping(path="/guestbook")
+	@PostMapping(path="/guestbook/{entry}")
 	String editEntry(@Valid @ModelAttribute("form") GuestbookForm form, GuestbookEntry entry,  Errors errors, Model model){
 
 		entry.setName(form.getName());
