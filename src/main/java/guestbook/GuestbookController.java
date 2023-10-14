@@ -106,7 +106,7 @@ class GuestbookController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "/guestbook/{entry}")
     String editEntry(@Valid @ModelAttribute("form") GuestbookForm form, GuestbookEntry entry, Errors errors, Model model) {
-        System.out.println("get in there luis");
+        //System.out.println("get in there luis");
         entry.setName(form.getName());
         entry.setText(form.getText());
 
@@ -163,14 +163,14 @@ class GuestbookController {
     @HxRequest
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "/guestbook/{entry}")
-    HtmxResponse editEntryHtmx(@Valid @ModelAttribute("form") GuestbookForm form, GuestbookEntry entry, Errors errors, Model model) {
+    HtmxResponse editEntryHtmx(@Valid GuestbookForm form, GuestbookEntry entry, Errors errors, Model model) {
         System.out.println("get in there luis");
         entry.setName(form.getName());
         entry.setText(form.getText());
 
-        model.addAttribute(guestbook.save(entry));
+        model.addAttribute("entry", guestbook.save(entry));
 
-        return new HtmxResponse().addTemplate("guestbook :: entry").addTrigger("eventEdit");
+        return new HtmxResponse().browserRefresh(true);
 
     }
 
