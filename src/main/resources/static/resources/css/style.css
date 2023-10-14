@@ -1,4 +1,4 @@
-div#entries, #form {
+div#entries, #form, #edit-form {
 	margin: auto;
 	width: 50%;
 }
@@ -19,6 +19,6 @@ blockquote {
 	margin: 0;
 }
 
-form#form {
+form#form, form#edit-form {
 	padding: 0 1.25em;
 }

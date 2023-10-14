@@ -42,6 +42,11 @@
 			</div>
 		</div>
 
+		<form  sec:authorize="hasRole('ADMIN')" method="post" role="edit-form" class="edit-form" id="edit-form" hx:post="@{/guestbook/edit}" th:action="@{/guestbook/edit}">
+			<label for="edit-input">Bad Words</label> <br>
+			<input class="edit-input" type="text">
+		</form>
+
 		<form method="post" role="form" class="gb-form" id="form" hx:post="@{/guestbook}" hx-target="#entries" hx-swap="beforeend" _="on entryAdded me.reset()" th:action="@{/guestbook}" th:object="${form}">
 			<div class="form-group">
 				<label for="name" th:text="#{guestbook.form.name}">Name</label><br /> 
