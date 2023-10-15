@@ -40,7 +40,7 @@
                       th:attr="data-entry-id=${entry.id}" th:object="${form}">
                     <input class="form-control" type="text" th:value="${entry.name}" th:field="*{name}" th:errorclass="is-invalid" required="required"/>
                     <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback" th:text="#{guestbook.form.name.required}">
-                        Please provide a name.
+                        Please provide a name for confirmation.
                     </div>
                     <textarea th:field="*{text}" th:errorclass="is-invalid" class="form-control" required="required" th:value="${entry.name}"></textarea>
                     <div th:if="${#fields.hasErrors('text')}" class="invalid-feedback" th:text="#{guestbook.form.text.required}">

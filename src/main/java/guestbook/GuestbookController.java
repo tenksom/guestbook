@@ -110,12 +110,9 @@ class GuestbookController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "/guestbook/{entry}")
     String editEntry(@Valid @ModelAttribute("form") GuestbookForm form, GuestbookEntry entry, Errors errors, Model model) {
-        System.out.println("get in there luis");
         String text = form.getText();
         guestbook.findByName(form.getName(), Sort.by("name")).forEach(guestbookEntry ->{
-            System.out.println(guestbookEntry.getName());
             guestbookEntry.setText(text);
-            System.out.println(guestbookEntry.getText());
             guestbookEntry.setText(text);
             guestbook.save(guestbookEntry);
         });
