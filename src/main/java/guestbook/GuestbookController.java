@@ -21,6 +21,8 @@ import jakarta.validation.Valid;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Streamable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.sound.midi.SysexMessage;
 
 /**
  * A controller to handle web requests to manage {@link GuestbookEntry}s
@@ -106,11 +110,16 @@ class GuestbookController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "/guestbook/{entry}")
     String editEntry(@Valid @ModelAttribute("form") GuestbookForm form, GuestbookEntry entry, Errors errors, Model model) {
-        //System.out.println("get in there luis");
-        entry.setName(form.getName());
-        entry.setText(form.getText());
+        System.out.println("get in there luis");
+        String text = form.getText();
+        guestbook.findByName(form.getName(), Sort.by("name")).forEach(guestbookEntry ->{
+            System.out.println(guestbookEntry.getName());
+            guestbookEntry.setText(text);
+            System.out.println(guestbookEntry.getText());
+            guestbookEntry.setText(text);
+            guestbook.save(guestbookEntry);
+        });
 
-        guestbook.save(entry);
         return "redirect:/guestbook";
     }
 
@@ -164,7 +173,7 @@ class GuestbookController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "/guestbook/{entry}")
     HtmxResponse editEntryHtmx(@Valid GuestbookForm form, GuestbookEntry entry, Errors errors, Model model) {
-        System.out.println("get in there luis");
+        // System.out.println("get in there luis");
         entry.setName(form.getName());
         entry.setText(form.getText());
 
